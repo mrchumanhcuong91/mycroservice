@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package userService;
+
+option go_package = "proto;userService";
+
+service UserService {
+	rpc Call(Request) returns (Response) {}
+	//user
+	rpc AddUser(UserModel) returns (Response) {}
+	rpc UpdateUser(UserModel) returns (Response) {}
+	rpc DeleteUser(Request) returns (Response) {}
+	rpc GetUser(Request) returns (UserModel) {}
+	rpc GetAllUser(Request) returns (Response) {}
+	//end
+	rpc Stream(StreamingRequest) returns (stream StreamingResponse) {}
+	rpc PingPong(stream Ping) returns (stream Pong) {}
+}
+
+message Message {
+	string say = 1;
+}
+message UserModel{
+	string name = 1;
+	int64 age = 2;
+	string idcard =3;
+}
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+	repeated UserModel listUser = 2;
+}
+
+message StreamingRequest {
+	int64 count = 1;
+}
+
+message StreamingResponse {
+	int64 count = 1;
+}
+
+message Ping {
+	int64 stroke = 1;
+}
+
+message Pong {
+	int64 stroke = 1;
+}

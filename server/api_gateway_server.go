@@ -1,6 +1,8 @@
 package server
 import ("github.com/gin-gonic/gin"
 		a "com/tienxe/lib/service/authorization"
+		dao "com/tienxe/lib/server/user_service/daos"
+		"log"
 		)
 //declare struct apigateway
 type ApiGateWayServer struct{
@@ -8,17 +10,20 @@ type ApiGateWayServer struct{
 	* gin.Engine
 	//authorization service
 	authService a.AuthService
+	uDao *dao.UserDao
 
 }
 //constructor
 func NewApiGateWayServer(mysql string) (api *ApiGateWayServer){
+	log.Println("call NewApiGateWayServer %v",mysql)
 	api = &ApiGateWayServer{
 		Engine: gin.Default(),
-		authService: a.NewAuthenHandler(mysql)}
+		authService: a.NewAuthenHandler(mysql),
+		uDao :  dao.InitUserDao(mysql)}
 	api.createAuthenApi()
 	return
 }
 func (api *ApiGateWayServer) createAuthenApi(){
-	api.Group("/gateway/api")
-	api.POST("/register",api.CreateUserCtrl)
+	v1:=api.Group("/gateway/api")
+	v1.POST("/register",api.CreateUserCtrl)
 }
