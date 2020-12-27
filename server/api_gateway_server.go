@@ -2,6 +2,7 @@ package server
 import ("github.com/gin-gonic/gin"
 		a "com/tienxe/lib/service/authorization"
 		dao "com/tienxe/lib/server/user_service/daos"
+		client "github.com/micro/micro/v3/service/client"
 		"log"
 		)
 //declare struct apigateway
@@ -11,6 +12,7 @@ type ApiGateWayServer struct{
 	//authorization service
 	authService a.AuthService
 	uDao *dao.UserDao
+	Client client.Client
 
 }
 //constructor
